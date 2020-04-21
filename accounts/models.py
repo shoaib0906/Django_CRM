@@ -1,11 +1,13 @@
 from django.db import models
-
+from django.contrib.auth.models import User
 # Create your models here.
 
 class Customer(models.Model):
+    user = models.OneToOneField(User,null=True,default=True,on_delete=models.CASCADE)
     name = models.CharField(max_length=200,null=True)
     phone = models.CharField(max_length=50,null=True)
     email = models.CharField(max_length=200,null=True)
+    profile_pic = models.ImageField(default="profile1.png",null=True,blank=True)
     date_created = models.DateTimeField(auto_now_add=True,null=True)
 
 
@@ -46,3 +48,8 @@ class Order(models.Model):
 
     def __str__(self):
         return self.product.name
+
+#models.ForeignKey for foreignkey
+#models.ManyToManyField(Tag) --->Tag is already a model which establish many to many relationship
+#models.cascade is for whereever a user will delete the customer will erased.
+#Dropdown is like choices=STAUS where STATUS is already a array.
